@@ -46,7 +46,8 @@ if resultados:
         print(f"Nome: {med[1]}")
         print(f"Concentração: {med[2]}")
         print(f"Forma: {med[3]}")
-        print(f"Página: {med[4]}")
+        print(f"Especificação: {med[4]}")
+        print(f"Unidade: {med[5]}")
 else:
     print("Nenhum resultado encontrado")
 

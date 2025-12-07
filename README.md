@@ -22,14 +22,11 @@ python scripts/consultar_remume.py
 # Verificar dados do Banco de Dados 
 python scripts/verificar_banco.py
 
-# Recriar o banco
-python scripts/criar_banco_remume.py
-```
-
 ## Tabela: medicamentos
 
 - `id` - Identificador
 - `denominacao_comum` - Nome do medicamento
 - `concentracao` - Concentração
 - `forma_farmaceutica` - Comprimido, cápsula, etc.
-- `pagina` - Página no PDF
+- `especificacao` - Público-alvo (criança, adulto, obesos, etc.)
+- `unidade` - Forma de contagem (caixa, unidade única, etc.)

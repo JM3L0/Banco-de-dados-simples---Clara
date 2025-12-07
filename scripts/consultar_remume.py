@@ -48,7 +48,8 @@ def buscar_por_nome(nome):
             print(f"Nome: {med[1]}")
             print(f"Concentração: {med[2]}")
             print(f"Forma Farmacêutica: {med[3]}")
-            print(f"Página no PDF: {med[4]}")
+            print(f"Especificação: {med[4]}")
+            print(f"Unidade: {med[5]}")
             print("-" * 100)
     else:
         print(f"\nNenhum medicamento encontrado com o nome '{nome}'")
@@ -116,6 +117,31 @@ def estatisticas():
     
     conn.close()
 
+def buscar_por_especificacao(especificacao):
+    """Busca medicamentos por especificação (criança, adulto, etc.)"""
+    conn = conectar_banco()
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+        SELECT * FROM medicamentos 
+        WHERE especificacao LIKE ? 
+        ORDER BY denominacao_comum
+    ''', (f'%{especificacao}%',))
+    
+    resultados = cursor.fetchall()
+    
+    if resultados:
+        print(f"\n{'='*100}")
+        print(f"ENCONTRADOS {len(resultados)} MEDICAMENTO(S) COM ESPECIFICAÇÃO: '{especificacao}'")
+        print(f"{'='*100}\n")
+        
+        for med in resultados:
+            print(f"{med[1]} - {med[2]} - Especificação: {med[4]}")
+    else:
+        print(f"\nNenhum medicamento encontrado com a especificação '{especificacao}'")
+    
+    conn.close()
+
 def menu():
     """Exibe menu de opções"""
     print("\n" + "="*100)
@@ -124,7 +150,8 @@ def menu():
     print("1 - Listar todos os medicamentos")
     print("2 - Buscar medicamento por nome")
     print("3 - Buscar por forma farmacêutica")
-    print("4 - Exibir estatísticas")
+    print("4 - Buscar por especificação (criança, adulto, etc.)")
+    print("5 - Exibir estatísticas")
     print("0 - Sair")
     print("="*100)
 
@@ -145,6 +172,10 @@ def main():
             if forma:
                 buscar_por_forma(forma)
         elif opcao == '4':
+            especificacao = input("Digite a especificação (criança, adulto, obesos, etc.): ").strip()
+            if especificacao:
+                buscar_por_especificacao(especificacao)
+        elif opcao == '5':
             estatisticas()
         elif opcao == '0':
             print("\nEncerrando o sistema...")
